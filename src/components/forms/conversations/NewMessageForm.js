@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_ROOT, HEADERS } from '../constants';
+import { API_ROOT, HEADERS } from '../../../constants/constants';
 
 class NewMessageForm extends React.Component {
   state = {

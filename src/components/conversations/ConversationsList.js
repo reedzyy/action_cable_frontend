@@ -1,9 +1,9 @@
 import React from 'react';
 import { ActionCable } from 'react-actioncable-provider';
-import { API_ROOT } from '../constants';
-import NewConversationForm from './NewConversationForm';
+import { API_ROOT } from '../../constants/constants';
+import NewConversationForm from '../forms/conversations/NewConversationForm';
 import MessagesArea from './MessagesArea';
-import Cable from './Cable';
+import Cable from '../Cable';
 
 class ConversationsList extends React.Component {
   state = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import NewMessageForm from './NewMessageForm';
+import NewMessageForm from '../forms/conversations/NewMessageForm';
 
 const MessagesArea = ({
   conversation: { id, title, messages },

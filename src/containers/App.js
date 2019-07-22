@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import ConversationsList from './components/ConversationsList';
-// import logo from './logo.svg';
-// import './App.css';
+import ConversationsList from '../components/conversations/ConversationsList';
 
 class App extends Component {
   render() {
