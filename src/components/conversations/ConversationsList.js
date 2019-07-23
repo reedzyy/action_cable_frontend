@@ -1,9 +1,9 @@
 import React from 'react';
+import { ChatList } from 'react-chat-elements'
 import { ActionCable } from 'react-actioncable-provider';
 import { API_ROOT } from '../../constants/constants';
-import NewConversationForm from '../forms/conversations/NewConversationForm';
-import MessagesArea from './MessagesArea';
 import Cable from '../Cable';
+import { findActiveConversation, mapConversations } from '../../utils/conversations';
 
 class ConversationsList extends React.Component {
   state = {
@@ -41,7 +41,7 @@ class ConversationsList extends React.Component {
   render = () => {
     const { conversations, activeConversation } = this.state;
     return (
-      <div className="conversationsList">
+      <div className="ch-conversations">
         <ActionCable
           channel={{ channel: 'ConversationsChannel' }}
           onReceived={this.handleReceivedConversation}
@@ -52,38 +52,14 @@ class ConversationsList extends React.Component {
             handleReceivedMessage={this.handleReceivedMessage}
           />
         ) : null}
-        <h2>Conversations</h2>
-        <ul>{mapConversations(conversations, this.handleClick)}</ul>
-        <NewConversationForm />
-        {activeConversation ? (
-          <MessagesArea
-            conversation={findActiveConversation(
-              conversations,
-              activeConversation
-            )}
-          />
-        ) : null}
+        <ChatList 
+          className='chat-list'
+          dataSource={ mapConversations(conversations) }
+          onClick={(event) => this.handleClick(event.id)}
+        />
       </div>
     );
   };
 }
 
 export default ConversationsList;
-
-// helpers
-
-const findActiveConversation = (conversations, activeConversation) => {
-  return conversations.find(
-    conversation => conversation.id === activeConversation
-  );
-};
-
-const mapConversations = (conversations, handleClick) => {
-  return conversations.map(conversation => {
-    return (
-      <li key={conversation.id} onClick={() => handleClick(conversation.id)}>
-        {conversation.title}
-      </li>
-    );
-  });
-};

@@ -1,5 +1,6 @@
 import React from 'react';
 import { API_ROOT, HEADERS } from '../../../constants/constants';
+import { Input, Button } from 'react-chat-elements';
 
 class NewMessageForm extends React.Component {
   state = {
@@ -28,16 +29,22 @@ class NewMessageForm extends React.Component {
 
   render = () => {
     return (
-      <div className="newMessageForm">
+      <div className="ch-messages-input">
         <form onSubmit={this.handleSubmit}>
-          <label>New Message:</label>
-          <br />
-          <input
-            type="text"
+          <Input
             value={this.state.text}
             onChange={this.handleChange}
+            placeholder="Write a message..."
+            multiline={false}
+            rightButtons={
+              <Button
+                type="submit"
+                color='#4E8CA6'
+                backgroundColor='white'
+                text='Send'
+              />
+            }
           />
-          <input type="submit" />
         </form>
       </div>
     );
