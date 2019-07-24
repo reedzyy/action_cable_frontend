@@ -4,8 +4,18 @@ import AppSidebar from '../views/AppSidebar/AppSidebar';
 import AppContent from './AppContent';
 import 'react-chat-elements/dist/main.css';
 import '../styles/application.scss';
+import { findActiveConversation } from '../utils/conversations';
 
 class App extends Component {
+
+  state = {
+    activeConversation: null
+  };
+
+  handleClick = (conversations, id) => {
+    this.setState({ activeConversation: findActiveConversation(conversations, id) });
+  };
+
   render() {
     return (
       <div className="ch">
@@ -14,10 +24,10 @@ class App extends Component {
         </div>
         <div className="ch-page">
           <div className="ch-sidebar">
-            <AppSidebar />
+            <AppSidebar handleClick={this.handleClick} />
           </div>
           <div className="ch-content">        
-            <AppContent />
+            <AppContent activeConversation={this.state.activeConversation}/>
           </div>
         </div>
       </div>

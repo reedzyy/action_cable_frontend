@@ -8,7 +8,7 @@ class AppSidebar extends Component {
       <SideBar
         type='light'
         top={
-          <ConversationsList />
+          <ConversationsList handleClick={this.props.handleClick}/>
         }
       />
     );

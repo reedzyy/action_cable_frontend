@@ -3,8 +3,12 @@ import MessagesArea from '../components/conversations/MessagesArea';
 
 class AppContent extends Component {
   render() {
+    const { activeConversation } = this.props;
+
     return (
-      false ? (<MessagesArea />): (<div className="ch-stub">Please select a chat to start messaging</div>)
+      activeConversation
+        ? (<MessagesArea conversation={activeConversation}/>)
+        : (<div className="ch-stub">Please select a chat to start messaging</div>)
     );
   }
 }
