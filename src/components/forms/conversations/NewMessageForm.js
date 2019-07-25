@@ -25,6 +25,7 @@ class NewMessageForm extends React.Component {
       body: JSON.stringify(this.state)
     });
     this.setState({ text: '' });
+    this.refs.input.clear();
   };
 
   render = () => {
@@ -32,7 +33,7 @@ class NewMessageForm extends React.Component {
       <div className="ch-messages-input">
         <form onSubmit={this.handleSubmit}>
           <Input
-            value={this.state.text}
+            ref='input'
             onChange={this.handleChange}
             placeholder="Write a message..."
             multiline={false}

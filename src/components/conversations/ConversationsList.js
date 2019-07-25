@@ -1,24 +1,23 @@
 import React from 'react';
 import { ChatList } from 'react-chat-elements'
-import { ActionCable } from 'react-actioncable-provider';
+import { ActionCableConsumer } from 'react-actioncable-provider';
 import { API_ROOT } from '../../constants/constants';
 import Cable from '../Cable';
-import { findActiveConversation, mapConversations } from '../../utils/conversations';
+import { mapConversations } from '../../utils/conversations';
 
 class ConversationsList extends React.Component {
-  state = {
-    conversations: [],
-    activeConversation: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      conversations: [],
+      activeConversation: null
+    };
   };
 
   componentDidMount = () => {
     fetch(`${API_ROOT}/conversations`)
       .then(res => res.json())
       .then(conversations => this.setState({ conversations }));
-  };
-
-  handleClick = id => {
-    this.setState({ activeConversation: id });
   };
 
   handleReceivedConversation = response => {
@@ -36,13 +35,14 @@ class ConversationsList extends React.Component {
     );
     conversation.messages = [...conversation.messages, message];
     this.setState({ conversations });
+    this.props.handleClick(conversations, conversation.id)
   };
 
   render = () => {
-    const { conversations, activeConversation } = this.state;
+    const { conversations } = this.state;
     return (
       <div className="ch-conversations">
-        <ActionCable
+        <ActionCableConsumer
           channel={{ channel: 'ConversationsChannel' }}
           onReceived={this.handleReceivedConversation}
         />
@@ -55,7 +55,7 @@ class ConversationsList extends React.Component {
         <ChatList 
           className='chat-list'
           dataSource={ mapConversations(conversations) }
-          onClick={(event) => this.handleClick(event.id)}
+          onClick={(event) => this.props.handleClick(conversations, event.id)}
         />
       </div>
     );
